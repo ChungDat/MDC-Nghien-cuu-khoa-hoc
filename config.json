@@ -1,10 +1,19 @@
 {
-    "delay": 0.8,
+    "display":
+    {
+        "delay": 0.8,
+        "cols_per_row": 4,
+        "form_title": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
+        "form_header": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
+        "scene_1_title": "Scene_1",
+        "scene_2_title": "Scene_2",
+        "scene_3_title": "Scene_3"
+    },
     "form":
     {
-        "answers": "data/form/answers.txt",
-        "questions": "data/form/questions.txt",
-        "linkert": "data/form/linkert.txt"
+        "answers": "data/form/answers.json",
+        "questions": "data/form/questions.json",
+        "linkert": "data/form/linkert.json"
     },
     "script":
     {

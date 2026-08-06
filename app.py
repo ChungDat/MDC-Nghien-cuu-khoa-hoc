@@ -2,31 +2,28 @@ import warnings
 import pandas as pd
 import numpy as np
 import streamlit as st
-from utils import load_model, parse_code_text_file, load_data
+from utils import load_model, load_data
 
 # Tắt cảnh báo phiên bản unpickle của sklearn
 warnings.filterwarnings("ignore")
 
-# Cấu hình trang Streamlit
-st.set_page_config(
-    page_title="Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
-    page_icon="📋",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
 config = load_data("config.json")
 
-# Thang đo Likert tiếng Việt (1 đến 5)
-with open(config["form"]["linkert"], 'r', encoding='utf-8') as f:
-    LIKERT_OPTIONS = {i+1: line.strip() for i, line in enumerate(f)}
+# Cấu hình trang Streamlit
+st.set_page_config(
+    page_title=config["display"]["form_title"],
+    page_icon="📋",
+    layout="wide",
+)
 
+LINKERT_FILE_PATH = config["form"]["linkert"]
 Q_FILE_PATH = config["form"]["questions"]
 A_FILE_PATH = config["form"]["answers"]
+COLS_PER_ROW = config["display"]["cols_per_row"]
+
 
 def main():
-    # Header ứng dụng bằng component chuẩn của Streamlit
-    st.title("Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường")
+    st.title(config["display"]["form_header"])
     
     # Tải mô hình
     model = load_model(config["model"])
@@ -42,32 +39,41 @@ def main():
         
     n_outputs = getattr(model, "n_outputs_", 7)
 
-    # Đọc danh sách câu hỏi và danh sách chiều tác động (answers)
-    questions = parse_code_text_file(Q_FILE_PATH)
-    answers_info = parse_code_text_file(A_FILE_PATH)
+    # Đọc danh sách câu hỏi, danh sách chiều tác động, điểm linkert
+    linkert_options = load_data(LINKERT_FILE_PATH)
+    questions = load_data(Q_FILE_PATH)
+    answers_info = load_data(A_FILE_PATH)
     
     if not questions:
         st.warning(f"Không tìm thấy câu hỏi nào trong `{Q_FILE_PATH}`")
         st.stop()
+
+    if not answers_info:
+        st.warning(f"Không tìm thấy mô tả nào trong `{A_FILE_PATH}`")
+        st.stop()
+
+    if not linkert_options:
+        st.warning(f"Không tìm thấy điểm Likert nào trong `{LINKERT_FILE_PATH}`")
+        st.stop()
         
     st.caption("Vui lòng chọn mức độ đánh giá phù hợp nhất với bạn cho từng câu hỏi bên dưới (Thang đo Likert từ 1 đến 5).")
     
-    # Thanh công cụ nhanh: Chọn ngẫu nhiên / Đặt lại
+    # Thanh công cụ nhanh: Chọn ngẫu nhiên / Đặt lại / Xoá câu trả lời
     col_act1, col_act2, col_act3, _ = st.columns([2, 2, 2, 4])
     with col_act1:
-        if st.button("🎲 Chọn ngẫu nhiên câu trả lời"):
-            for q in questions:
-                st.session_state[f"q_{q['code']}"] = int(np.random.randint(1, 6))
+        if st.button("Chọn ngẫu nhiên câu trả lời"):
+            for q in questions.keys():
+                st.session_state[f"q_{q}"] = int(np.random.randint(1, 6))
             st.rerun()
     with col_act2:
-        if st.button("🧹 Đặt lại về Trung lập (3)"):
-            for q in questions:
-                st.session_state[f"q_{q['code']}"] = 3
+        if st.button("Đặt lại về Trung lập (3)"):
+            for q in questions.keys():
+                st.session_state[f"q_{q}"] = 3
             st.rerun()
     with col_act3:
         if st.button("Xoá tất cả câu trả lời"):
-            for q in questions:
-                st.session_state[f"q_{q['code']}"] = None
+            for q in questions.keys():
+                st.session_state[f"q_{q}"] = None
             st.rerun()
 
     # Form khảo sát với các Radio Button
@@ -76,43 +82,43 @@ def main():
         
         # Nhóm câu hỏi theo tiền tố (Ví dụ: CB, FOMO, CSCT)
         prefixes = {}
-        for q in questions:
-            prefix = q["code"].split("_")[0] if "_" in q["code"] else "Khác"
+        for q in questions.keys():
+            prefix = q.split("_")[0] if "_" in q else "Khác"
             prefixes.setdefault(prefix, []).append(q)
             
         tabs = st.tabs([f"Nhóm {p} ({len(qs)} câu)" for p, qs in prefixes.items()])
         for tab, (p, qs) in zip(tabs, prefixes.items()):
             with tab:
                 # Chú thích hiển thị bằng st.info
-                legend_text = " - ".join([f"**{k}**: {v}" for k, v in LIKERT_OPTIONS.items()])
+                legend_text = " - ".join([f"**{k}**: {v}" for k, v in linkert_options.items()])
                 st.info(legend_text)
                 
-                # Header row for the table-like layout
                 hcol1, hcol2 = st.columns([8, 2])
                 hcol1.write("**Câu hỏi khảo sát**")
                 hcol2.write("**Mức độ đánh giá (1 - 5)**")
                 st.divider()
 
                 for q in qs:
-                    key = f"q_{q['code']}"
+                    key = f"q_{q}"
                     default_val = st.session_state.get(key, 3)
                     
                     col1, col2 = st.columns([8, 2], vertical_alignment="center")
-                    col1.write(f"{q['text']}")
+                    col1.write(f"{questions[q]}")
                     
                     with col2:
                         val = st.radio(
-                            label=f"Chọn câu trả lời cho {q['code']}",
+                            label=f"Chọn câu trả lời cho {q}",
                             options=[1, 2, 3, 4, 5],
                             index=None,
                             key=key,
                             horizontal=True,
                             label_visibility="collapsed"
                         )
-                    user_answers[q['code']] = val
+                    if val:
+                        user_answers[q] = val
                     st.divider()
                 
-        submit_btn = st.form_submit_button("🚀 Gửi Khảo Sát & Phân Tích Kết Quả", type="primary", use_container_width=True)
+        submit_btn = st.form_submit_button("Gửi Khảo Sát & Phân Tích Kết Quả", type="primary", use_container_width=True)
 
     # Xử lý kết quả dự đoán
     if submit_btn:
@@ -122,7 +128,8 @@ def main():
             if feat in user_answers:
                 input_data[feat] = user_answers[feat]
             else:
-                input_data[feat] = 3.0  # Giá trị trung lập nếu thiếu đặc trưng
+                st.error(f"Bạn chưa chọn câu trả lời cho câu hỏi {feat}")
+                st.stop()
                 
         X_df = pd.DataFrame([input_data])
         
@@ -133,32 +140,21 @@ def main():
             pred = np.round(raw_pred)
             pred_clamped = np.clip(pred, 1, 5)[0]  # Lấy mảng 1x7
             
-            st.header("🎯 Kết quả dự đoán tác động tâm lý")
+            st.header("Kết quả dự đoán tác động tâm lý")
             
-            # Chia thành các cột hiển thị đẹp mắt (sử dụng st.metric)
-            cols_per_row = 4
-            for i in range(0, n_outputs, cols_per_row):
-                cols = st.columns(cols_per_row)
-                for j in range(cols_per_row):
-                    idx = i + j
-                    if idx < n_outputs:
-                        score = int(pred_clamped[idx])
-                        # Lấy mã và mô tả từ answers.txt nếu có
-                        if idx < len(answers_info):
-                            ans_code = answers_info[idx]["code"]
-                            ans_desc = answers_info[idx]["text"]
-                        else:
-                            ans_code = f"PAIS_{idx+1:02d}"
-                            ans_desc = f"Chiều tác động thứ {idx+1}"
-                            
-                        with cols[j]:
-                            # Sử dụng st.metric native thay vì HTML
-                            st.metric(label=f"{ans_code}", value=f"Mức {score}/5")
-                            st.caption(f"{ans_desc}")
+            for i, (ans_code, ans_desc) in enumerate(answers_info.items()):
+                if i % COLS_PER_ROW == 0:
+                    cols = st.columns(COLS_PER_ROW)
+                if i < n_outputs:
+                    score = int(pred_clamped[i])
+
+                    with cols[i % COLS_PER_ROW]:
+                        st.metric(label=f"{ans_code}", value=f"Mức {score}/5")
+                        st.caption(f"{ans_desc}")
                 st.write("")
 
             # Khung chi tiết dữ liệu
-            with st.expander("🔍 Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
+            with st.expander("Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
                 st.write("**Vector dữ liệu khảo sát:**")
                 st.dataframe(X_df, use_container_width=True)
                 

@@ -1,9 +1,10 @@
 import streamlit as st
 from utils import load_data, inject_custom_css, render_text, render_user_text
 
-st.set_page_config(page_title="Scene 1", layout="centered")
-
 config = load_data("config.json")
+
+st.set_page_config(page_title=config["display"]["scene_1_title"], layout="centered")
+
 data = load_data(config['script']['scene_1'])
 inject_custom_css()
 

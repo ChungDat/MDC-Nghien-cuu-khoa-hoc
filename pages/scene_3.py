@@ -1,11 +1,12 @@
 import streamlit as st
 from utils import load_data, inject_custom_css, render_text, render_user_text
 
-st.set_page_config(page_title="Scene 3", layout="centered")
-
 config = load_data("config.json")
+
+st.set_page_config(page_title=config["display"]["scene_3_title"], layout="centered")
+
 data = load_data(config["script"]["scene_3"])
-DELAY = config.get("delay", 0.8)
+DELAY = config["display"]["delay"]
 
 inject_custom_css()
 
