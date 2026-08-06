@@ -1,0 +1,25 @@
+{
+    "greet": "Bạn ơi, tín hiệu hệ thống cảnh báo bạn đang phải hứng chịu những tổn thương trực tuyến ở mức độ báo động khẩn cấp và cực kỳ nghiêm trọng (Mức Báo động đỏ). Hãy dừng lại, thả lỏng vai và nghe mình nói thật kỹ: Bạn tuyệt đối không có lỗi trong chuyện này, bạn là nạn nhân và bạn không phải chịu đựng sự đe dọa, đau đớn này một mình!\nHệ thống hiện đã ngắt toàn bộ chế độ trò chuyện tự động tự do của AI và kích hoạt Giao thức Bảo vệ Khẩn cấp dưới đây:",
+
+    "problem":
+    {
+        "a":
+        {
+            "response": "Trước khi xử lý công việc, hãy cùng mình ổn định lại nhịp tim và hơi thở bằng kỹ thuật Thở Hộp vuông (Box Breathing):\n1.\tHít vào bằng mũi thật chậm trong 4 giây... (1... 2... 3... 4...)\n2.\tNín thở và giữ hơi trong 4 giây... (1... 2... 3... 4...)\n3.\tThở ra bằng miệng thật nhẹ nhàng trong 4 giây... (1... 2... 3... 4...)\n4.\tTạm nghỉ và thả lỏng trong 4 giây... (1... 2... 3... 4...)\n(Hãy lặp lại chu kỳ này 3 lần để não bộ nhận tín hiệu an toàn thể lý).",
+
+            "answer_1": "Mình đã thấy nhịp thở đều hơn một chút.",
+            "answer_2": "Mình vẫn thấy rất hoảng loạn, bồn chồn và sợ hãi."
+        },
+
+        "b":
+        {
+            "response": "1.\tNgắt kết nối lập tức: Đóng ngay các ứng dụng mạng xã hội. Kẻ tống tiền hoặc bắt nạt hoàn toàn bất lực và không thể làm tổn hại bạn nếu bạn không nhìn thấy tin nhắn của chúng.\n2.\tBẻ gãy bẫy tống tiền/thao túng: Tuyệt đối không chuyển tiền theo yêu cầu, không thực hiện các hành vi sai lệch do bị cưỡng ép. Hãy tin rằng luật pháp và nhà trường luôn bảo vệ quyền lợi của bạn.\n3.\tĐường dây nóng Quốc gia: Liên hệ ngay lập tức với Tổng đài Quốc gia Bảo vệ Trẻ em: 111 (Cuộc gọi hoàn toàn miễn phí, bảo mật danh tính tuyệt đối và hỗ trợ can thiệp pháp lý/tâm lý 24/7).\n4.\tLá chắn bảo vệ trường Mạc Đĩnh Chi: Bạn có đồng ý để hệ thống gửi một mã số hỗ trợ ẩn danh kết nối trực tiếp đến Thầy Hiệu Trưởng hoặc các Thầy/Cô chuyên trách tại Phòng Tư vấn Tâm lý trường THPT Mạc Đĩnh Chi để nhà trường chủ động vào cuộc che chở, bảo vệ an toàn và can thiệp pháp lý giúp bạn ngay ngày hôm nay không?",
+
+            "answer_1": "ĐỒNG Ý KẾT NỐI BẢO VỆ KHẨN CẤP.",
+            "response_1": "Tín hiệu an ninh đã được mã hóa gửi đi thành công. Nhà trường và các thầy cô sẽ lập tức làm điểm tựa vững chắc để bảo vệ sự an toàn cho bạn. Kẻ xấu sẽ phải chịu trách nhiệm trước pháp luật. Hãy tắt điện thoại, nghỉ ngơi và tin tưởng nhé!",
+
+            "answer_2": "Mình muốn tự liên hệ sau.",
+            "response_2": "Mình tôn trọng bạn. Nhưng hãy lưu lại số 111 và địa chỉ phòng tâm lý của trường nhé. Kẻ lừa đảo/tống tiền chỉ mạnh nhất khi bạn cô độc giữ bí mật. Cho phép những người lớn đáng tin cậy đồng hành là cách nhanh nhất để tước đi quyền lực thao túng của chúng. Bạn rất dũng cảm, hãy tự bảo vệ mình nhé!"
+        }
+    }
+}

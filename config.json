@@ -1,0 +1,16 @@
+{
+    "delay": 0.8,
+    "form":
+    {
+        "answers": "data/form/answers.txt",
+        "questions": "data/form/questions.txt",
+        "linkert": "data/form/linkert.txt"
+    },
+    "script":
+    {
+        "scene_1": "data/script/scene_1.json",
+        "scene_2": "data/script/scene_2.json",
+        "scene_3": "data/script/scene_3.json"
+    },
+    "model": "model/rf.joblib"
+}

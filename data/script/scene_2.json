@@ -1,0 +1,112 @@
+{
+    "greet": "Chào bạn, mình ở đây để đồng hành cùng bạn đi qua những cảm xúc khó khăn lúc này. Hệ thống ghi nhận trạng thái của bạn đang thuộc nhóm Nguy cơ trung bình do chịu tác động từ các áp lực không gian mạng. Mình biết bạn đang phải chịu đựng những lo âu, bồn chồn này một mình và cảm thấy rất mệt mỏi. Hãy cùng mình thả lỏng cơ thể, hít một hơi thật sâu... Bạn hoàn toàn an toàn tại đây. Sự cố nào trực tuyến đang làm bạn tổn thương hoặc bận tâm nhất?",
+
+    "problem":
+    {
+        "a": 
+        {
+            "request": "Có người đăng bình luận ác ý, tung tin đồn thất thiệt hoặc cô lập mình trên mạng.",
+            "response": "Chào bạn, mình ở đây để cùng bạn vượt qua những cảm xúc khó khăn và áp lực lúc này. Đối diện với các trải nghiệm bị bắt nạt, công kích, nói xấu hoặc nhận những bình luận ác ý trên mạng xã hội, mình hiểu rằng bạn đang cảm thấy vô cùng mệt mỏi, bất an, tổn thương và thậm chí là hoài nghi về giá trị của chính bản thân mình. Để không bị những suy nghĩ tiêu cực cuốn đi xa hơn, bạn và mình hãy cùng nhau thực hiện 3 bài tập CBT chuyên sâu dưới đây nhé!",
+
+            "exercise":
+            {
+                "1":
+                {
+                    "response": "Khi đọc phải những bình luận ác ý, bài viết công kích hay tin đồn thất thiệt về mình trên mạng, hãy kiểm tra xem bạn có đang vướng vào các bẫy suy nghĩ lệch lạc này không nhé.",
+
+                    "answer_1": "Cá nhân hóa: Bạn cảm thấy mình thật tệ hại, yếu kém và tự trách bản thân rằng: \"Chắc vì mình có điểm gì đó không tốt, ngoại hình mình chưa chuẩn, cách ứng xử của mình vụng về nên người ta mới ghét, mới đăng bài bêu rếu và công kích mình như vậy\"",
+                    "answer_2": "Suy nghĩ ai cũng ghét mình: Bạn cảm thấy như cả thế giới đang quay lưng lại với mình, trong đầu liên tục xuất hiện suy nghĩ suy sụp: \"Tất cả mọi người trong trường, trong lớp đều đang hùa vào ghét bỏ, chế giễu mình, sẽ chẳng còn ai tin tưởng hay sẵn sàng đứng về phía mình nữa\"",
+                    "answer_3": "Tiêu cực hóa: Bạn cảm thấy tương lai của mình đã hoàn toàn sụp đổ và tuyệt vọng nghĩ rằng: \"Mọi chuyện thế là hết rồi, danh dự và hình ảnh của mình đã hoàn toàn bị hủy hoại vĩnh viễn, mình không bao giờ có thể ngẩng mặt lên nhìn ai ở trường nữa, học đường đối với mình bây giờ chỉ là địa ngục\""
+                },
+
+                "2":
+                {
+                    "response": "Bây giờ, chúng ta hãy dùng góc nhìn logic và thực tế từ liệu pháp CBT để bóc tách, giải mã và thách thức bẫy tư duy bạn đang mắc phải.",
+
+                    "answer_1": "Hãy nhận diện sự thật: Những lời nói ác ý, miệt thị phản ánh chính nhân cách yếu kém và sự bất ổn tâm lý của kẻ phát ngôn, chứ hoàn toàn không phản ánh giá trị con người bạn! Kẻ bắt nạt chọn tấn công bạn chỉ để giải tỏa sự ganh tị hoặc những tổn thương bên trong của chính họ. Bạn hoàn toàn không có lỗi và không việc gì phải lấy cái sai của người khác để tự dằn dặn mình.",
+                    "answer_2": "Hãy tỉnh táo đánh giá: Có thực sự là \"tất cả mọi người\" đều ghét bạn không? Mạng xã hội chỉ là một phần rất nhỏ trong cuộc sống chúng ta. Thế giới thực của bạn rộng lớn hơn thế rất nhiều. Xung quanh bạn vẫn còn những người bạn thân thiết, cha mẹ luôn yêu thương và thầy cô sẵn sàng lắng nghe, bảo vệ bạn. Đừng để vài tài khoản ẩn danh hay những lời mỉa mai đơn giản làm thay đổi cách suy nghĩ và cách nhìn nhận của bạn về thế giới xung quanh.",
+                    "answer_3": "Hãy mở rộng góc nhìn thời gian: Mạng xã hội trôi tin rất nhanh, dư luận ảo ngày hôm nay sẽ nhanh chóng bị thay thế bởi tin tức khác vào ngày mai. Hãy nhắm mắt lại, hít một hơi thật sâu và tự hỏi: \"1 năm nữa, khi mình bước vào kỳ thi quan trọng, bài viết công kích này còn ai nhớ đến không? Nó có quyền quyết định tương lai hay ước mơ của mình không?\" Câu trả lời chắc chắn là KHÔNG!"
+                },
+
+                "3":
+                {
+                    "response": "Hãy bắt tay vào hành động thực tế ngay bây giờ để ngắt kết nối với năng lượng tiêu cực và lấy lại quyền kiểm soát cuộc sống.",
+
+                    "answer_1": "Áp dụng \"Quy tắc 24h - Không phản hồi\": Tuyệt đối không nhắn tin, không bình luận đôi co hay giải thích với kẻ bắt nạt (khi im lặng, kẻ xấu sẽ không còn thấy bạn là mục tiêu để bắt nạt nữa).\nMở sổ tay hoặc khung chat này, viết ra 3 ưu điểm, kỹ năng hoặc sở thích mà bạn tự hào nhất về bản thân (ví dụ: chơi thể thao giỏi, vẽ đẹp, biết lắng nghe) để tái khẳng định lại giá trị cá nhân, không chìm trong suy nghĩ tiêu cực quá lâu.",
+                    "answer_2": "Thay vì chìm đắm vào lo âu, hãy tự hỏi bản thân xem có bằng chứng hành động cụ thể nào chứng minh họ thực sự ghét bạn hay không, đồng thời học cách chấp nhận một thực tế rằng không ai có thể làm hài lòng tất cả mọi người.\nHãy chuyển dịch sự tập trung bằng cách đầu tư thời gian vào sở thích cá nhân, chăm sóc bản thân, duy trì các mối quan hệ lành mạnh sẵn có, hoặc chia sẻ thẳng thắn nỗi lòng với những người thực sự tin cậy để có được những góc nhìn khách quan, tích cực hơn.",
+                    "answer_3": "Để thoát khỏi suy nghĩ tiêu cực khi bị bắt nạt trực tuyến khiến bạn cảm thấy cuộc đời sụp đổ, hãy ngừng đọc những bình luận độc hại, ghi nhớ rằng lỗi lầm thuộc về kẻ bắt nạt chứ không phải bạn, và tìm kiếm sự hỗ trợ từ những người thân hoặc chuyên gia tâm lý.\n1.\tNgắt kết nối mạng: Tắt điện thoại hoặc khóa tài khoản tạm thời để chặn đứng những lời lẽ ác ý từ không gian mạng.\n2.\tNhận thức rõ sự thật: Hiểu rằng những lời lăng mạ trên mạng không định hình được giá trị con người thật của bạn.\n3.\tChia sẻ cảm xúc: Tâm sự ngay với một người bạn đáng tin cậy, người thân trong gia đình hoặc chuyên gia để không phải gánh chịu một mình."
+                }
+            }
+        },
+        "b": 
+        {
+            "request": "Mình liên tục bồn chồn, sợ bị bạn bè bỏ rơi, phải online liên tục để canh chừng các hội nhóm, mạng xã hội.",
+            "response": "Chào bạn, mình ở đây để cùng bạn giải tỏa những cảm giác bồn chồn, bứt rứt và lo âu lúc này. Mình biết đôi khi bạn cảm thấy rất khó chịu, đứng ngồi không yên khi không biết bạn bè đang làm gì, hoặc tự dằn dặt vì dành quá nhiều thời gian lướt mạng xã hội. Ngay bây giờ, bạn và mình hãy cùng thực hiện bài tập CBT 3 bước dưới đây để giành lại sự bình yên cho tâm trí nhé!",
+
+            "exercise":
+            {
+                "1":
+                {
+                    "response": "Khi lướt mạng xã hội và nhìn thấy những bức ảnh đi chơi, những khoảnh khắc vui vẻ của người khác, có phải bạn đang mắc vào các bẫy tư duy này không?",
+
+                    "answer_1": "Tư duy Trắng - Đen: Bạn cảm thấy hoang mang và lo sợ cực độ rằng: \"Nếu mình bỏ lỡ buổi gặp mặt này, không đi chơi cùng nhóm hoặc không hiểu được những câu đùa ngầm mới nhất của các bạn, mình sẽ hoàn toàn trở thành kẻ ngoài lề, bị bạn bè 'ra rìa' và cô lập mãi mãi\". Bạn cảm thấy kết nối bạn bè của mình cực kỳ dễ bị đứt gãy chỉ vì vài lần vắng mặt.",
+                    "answer_2": "Tự suy diễn: Bạn cảm thấy tủi thân, tự diễn dịch hành vi của người khác và nghĩ rằng: \"Họ đang tung tăng vui vẻ mà không cần có sự xuất hiện của mình, chắc chắn là họ cố tình cô lập mình, họ thấy mình nhàm chán và không còn muốn chơi với mình nữa\". Bạn cảm thấy tồi tệ vì tự suy diễn những kịch bản tiêu cực nhất về lý do bạn bè không rủ mình.",
+                    "answer_3": "So sánh không công bằng: Bạn nhìn vào trang cá nhân của người khác và nghĩ: \"Cuộc sống của ai cũng tràn ngập trải nghiệm bổ ích và hạnh phúc, chỉ có cuộc sống của mình là tẻ nhạt và vô vị.\""
+                },
+
+                "2":
+                {
+                    "response": "Cùng sử dụng tư duy logic để xem xét lại mức độ chân thực của những suy nghĩ trên nhé",
+
+                    "answer_1": "Hãy suy ngẫm thực tế: Một vài buổi hẹn bị bỏ lỡ hoặc một vài câu đùa chưa kịp cập nhật hoàn toàn không thể phá vỡ sợi dây tình bạn ngoài đời thực của bạn! Tình bạn đích thực được đo bằng sự thấu hiểu, chân thành khi gặp trực tiếp, chứ không đo bằng tần suất xuất hiện cùng nhau trên cùng khung ảnh trên mạng xã hội hay tần số của các buổi hẹn gặp mặt.",
+                    "answer_2": "Hãy thách thức suy nghĩ tự ti: Bạn có bằng chứng xác thực nào cho thấy họ ghét hay cố tình bỏ rơi bạn không? Đơn giản là lịch trình hôm đó không khớp, một cuộc hẹn bộc phát, hoặc chính họ cũng đang có những bận rộn riêng. Đừng tự gán cho mình vai phản diện hay nạn nhân trong suy diễn của chính mình. Hãy nhìn vào mặt tích cực của vấn đề không phải bạn bè không rủ chúng ta đi chơi là do họ đang muốn tránh xa hay cô lập mình mà có thể là do nhưng vấn đề khác.",
+                    "answer_3": "Có vẻ bạn đang gặp phải một bẫy tư duy khá phổ biến, đó chính là \"Thiên kiến chọn lọc\" và \"Khái quát hóa quá mức\", khi bạn đang nhìn vào một số cá nhân có thành tích nổi trội, có cuộc sống tràn ngập niềm vui, hạnh phúc rồi trực tiếp kết luận rằng \"Cuộc sống của mình thật tẻ nhạt, vô vị\". Những bài đăng hay trang cá nhân bạn theo dõi, gặp phải trên mạng xã hội không phải lúc nào cũng phản ảnh đầy đủ cuộc sống của người đó và cũng càng không đủ cơ sở để kết luận rằng ai cũng hạnh phúc hoặc có cuộc sống thú vị hơn mình. Mỗi người có hoàn cảnh, cơ hội và cách chia sẻ khác nhau."
+                },
+
+                "3":
+                {
+                    "response": "CHƯA CÓ KỊCH BẢN",
+
+                    "answer_1": "1.\tÁp dụng \"Kỹ thuật trì hoãn 15 phút\": Mỗi khi có cảm giác bồn chồn muốn mở điện thoại lên check tin tức, hãy tự ra lệnh cho não bộ: \"Đợi thêm 15 phút nữa\". Trong 15 phút này, hãy đứng dậy đi uống nước hoặc vận động nhẹ.\n2.\tTập \"vắng mặt có chủ đích\": Thay vì lần nào nhóm có hoạt động cũng cố gắng tham gia, hãy cố ý bỏ 1 hoạt động không quá quan trọng.\nVí dụ:\n\ti.\tNhóm rủ đi chơi, bạn không đi vì muốn nghỉ ngơi.\n\tii.\tKhông tham gia một cuộc trò chuyện nhóm trong vài giờ.\tMục tiêu là cho não của bạn trải nghiệm thực tế rằng \"Mình vắng mặt nhưng mối quan hệ vẫn tồn tại\".",
+                    "answer_2": "1.\tTắt toàn bộ thông báo chủ động của các ứng dụng mạng xã hội (Facebook, TikTok, Instagram) để loại bỏ tác nhân rung/chuông kích thích sự lo âu.\n2.\tKhông \"điều tra\" để tìm bằng chứng mình bị bỏ rơi: Khi tủi thân, bạn có thể muốn:\n\ti.\tXem story của từng người;\n\tii.\tKiểm tra ai đang đi với ai;\n\tiii.\tXem họ online nhưng không trả lời mình;\n\tiv.\tXem ảnh để tìm xem ai bị bỏ ra ngoài.\nHãy thử ngừng những hành vi kiểm tra này.Mục tiêu không phải là biết thêm thông tin, mà là học cách chịu được \"sự không chắc chắn\".",
+                    "answer_3": "Thay vì đánh giá giá trị cuộc sống của mình bằng những gì người khác thể hiện, mình nên nhìn nhận nó dựa trên mục tiêu, giá trị và trải nghiệm của chính mình.\nMục tiêu của các bài tập sau sẽ giúp bạn giảm thói quen so sánh bản thân với người khác, giúp não bộ chú ý đến những niềm vui tích cực mà chính bản thân đang có.\n1.\tViết nhật ký cuộc sống:\nĐôi lúc, ta thường bỏ quên đi những \"hạnh phúc nhỏ\" trong cuộc sống mà ta thường cho rằng là bình thường. Vậy vào mỗi cuối ngày, hãy ghi lại:\n\ti.\t3 điều tích cực mà bạn đã trải nghiệm;\n\tii.\t3 mục tiêu mà bạn đã hoàn thành trong ngày (Ví dụ: Làm xong bài tập toán, có một bữa cơm no, học thêm được kiến thức mới,...)\n\tiii.\tTối thiểu 3 mục tiêu nhỏ mà bạn muốn bản thân hoàn thành vào ngày mai hay ngày tới.\nVào mỗi cuối tuần, hãy lật lại cuốn nhật kí và suy ngẫm xem trước đây, bản thân mình  có phải đã bỏ lỡ những hạnh phúc đáng trân trọng này không, có đang đánh giá thấp những điều tích cực trong cuộc sống của chính mình không?\n2.\tNghỉ việc so sánh không công bằng trên mạng xã hội và tập trung phát triển chính mình.\nTrong vòng 3–7 ngày, hãy giảm thời gian sử dụng mạng xã hội hoặc tạm ngừng theo dõi những tài khoản thường khiến bạn cảm thấy tự ti hoặc áp lực. Thay vào đó, dành khoảng thời gian đó để thực hiện một hoạt động có ý nghĩa với bản thân như đọc sách, học một kỹ năng mới, tập thể dục hoặc gặp gỡ người thân, bạn bè.Sau thời gian này, hãy tự đánh giá: Mức độ hài lòng với cuộc sống của mình có thay đổi không? Mình có còn so sánh bản thân nhiều như trước không?\nThay vì tự hỏi bản than có giỏi hơn người khác hay không, hãy chuyển thành mình đã tiến bộ hơn so với trước kia ở điểm nào."
+                }
+            }
+        },
+        "c":
+        {
+            "request": "Mình lỡ bấm vào liên kết lạ làm mất tài khoản mạng xã hội, bị rò rỉ dữ liệu hoặc sập bẫy lừa đảo tài chính.",
+            "response": "Chào bạn, mình ở đây để giúp bạn giải tỏa sự bứt rứt, khó chịu và cùng tìm ra biện pháp để đối diện với những cảm xúc tiêu cực ngay lúc này. Mình hiểu rằng thật khó tránh khỏi việc tự đổ lỗi cho bản than hay cảm thấy tiếc nuối, sợ hãi sau khi bạn vô tình rơi vào các bẫy lừa đảo, thao túng thông tin trên mạng xã hội. Ngay bây giờ, hãy cùng mình thực hiện ngay 3 bài tập CBT sau đeer lấy lại sự bình tĩnh và hành động sáng suốt hơn nhé.",
+
+            "exercise":
+            {
+                "1":
+                {
+                    "response": "Bây giờ, hãy cho mình biết rằng sau khi gặp phải các bẫy lừa đảo mạng, gặp thiệt hại về tài chính, rò rỉ thông tin,..., bạn có đang mắc phải một trong các bẫy suy nghĩ sau không?",
+
+                    "answer_1": "Tự đổ lỗi và tuyệt vọng: Bạn cảm thấy mình thật kém cỏi, ngu ngốc khi vô tình rơi vào các bẫy lừa đảo. Bạn luôn có suy nghĩ rằng: \"Đáng lẽ mình nên biết trước...\" hoặc \"Đáng lẽ mình không nên đăng nhập vào trang web đó, không nên tin tưởng vào kẻ đó hay lời dụ dỗ đó.\"",
+                    "answer_2": "Mất niềm tin vào mọi thứ: Bạn cảm thấy mình không nên tin bất kì ai. Bạn nhận định rằng: \"Mọi thứ trên Internet là lừa đảo\". Bạn cho rằng: \"Mọi người luôn muốn lợi dụng mình.\" hoặc \"Bất cứ thông tin nào trên mạng đều không đáng tin.\"",
+                    "answer_3": "Cố gỡ lại bằng mọi giá: Bạn cảm thấy rằng nếu chuyển khoản thêm hay tương tác thêm thì sẽ lấy lại được số tiền, tài khoản đã mất. Bạn có suy nghĩ rằng nếu bạn tiếp tục đầu tư, tương tác thì bạn sẽ có thể kiếm được thêm gấp bội số tiền đã mất."
+                },
+
+                "2":
+                {
+                    "response": "Hãy cùng mình đánh giá và sử dụng tư duy phản biện để thay đổi suy nghĩ đó nhé",
+
+                    "answer_1": "Hãy thay đổi góc nhìn tích cực hơn nhé: Việc bạn bị lừa không có nghĩa là bạn kém thông minh hay thất bại. Hãy thử tự hỏi bản thân rằng: \"Liệu mình có đang đánh giá toàn bộ con người mình chỉ thông qua một sự việc sai lầm không?\" Thực tế, nhiều vụ lừa đảo được thiết kế để khai thác tâm lý con người. Điều quan trọng lúc này là bình tĩnh, xử lý hậu quả và rút ra bài học để giảm nguy cơ lặp lại.",
+                    "answer_2": "Hãy thách thức suy nghĩ tiêu cực này nhé: Sau một số trải nghiệm tiêu cực, bạn có thể cảm thấy tất cả mọi người xung quanh, mọi thứ trên Internet đều không đáng tin. Tuy nhiên hãy thử tự hỏi rằng liệu bạn có đang đánh giá toàn bộ mọi người chỉ thông qua một vài trải nghiệm tiêu cực hay không. Việc một số người lừa mình không có nghĩa tất cả mọi người đều như vậy. Mình cần thận trọng hơn, nhưng vẫn nên đánh giá từng người và từng tình huống dựa trên bằng chứng thay vì mặc định rằng ai cũng không đáng tin.",
+                    "answer_3": "Hãy tỉnh táo và chấp nhận sự thật: Khi đã mất tiền, bạn có thể cảm thấy rất khó chấp nhận và luôn hy vọng rằng chỉ cần cố thêm một chút là sẽ lấy lại được tất cả. Trước khi đưa ra quyết định, hãy tự hỏi: Mình đang tiếp tục vì có bằng chứng đáng tin cậy cho thấy khả năng thành công, hay chỉ vì tiếc số tiền hay tài khoản, thông tin đã mất? Những thứ đã mất đó là điều không thể thay đổi, và chúng không làm tăng khả năng thành công của quyết định hiện tại. Vì vậy, mỗi quyết định tiếp theo nên được cân nhắc dựa trên thông tin khách quan và khả năng thành công thực tế, thay vì bị chi phối bởi sự tiếc nuối hoặc mong muốn gỡ gạc bằng mọi giá."
+                },
+
+                "3":
+                {
+                    "response": "CHƯA CÓ KỊCH BẢN",
+
+                    "answer_1": "Mục tiêu của bài tập này là chuyển hướng tập trung từ cảm giác bất lực và tự trách của bạn sang hướng các hành động có thể kiểm soát.\n1.\tTrong vòng 15-30 phút, bạn hãy lập ra hai danh sách sau:\n\ti.\tDanh sách 1: Bao gồm những gì bạn không thể thay đổi\n\tii.\tDanh sách 2: Bao gồm những hành động bạn có thể thực hiện để tránh các tình huống đáng tiếc (VD: Đổi mật khẩu, lưu trữ bằng chứng, báo cáo vụ việc cho cơ quan chức năng,…)\n2.\tNgay trong ngày, hãy chọn 1 việc trong danh sách 2 để thực hiện.",
+                    "answer_2": "Mục tiêu là khôi phục lại tính đánh giá khách quan hay vì né tránh và nghi ngờ mọi thứ\n1.\tTrong một tuần, mỗi khi gặp một cuộc gọi, email hoặc tin nhắn yêu cầu cung cấp thông tin hoặc chuyển tiền, hãy tạm dừng vài phút và trả lời các câu hỏi sau:\n\ti.\tMình có biết rõ người hoặc tổ chức này không?\n\tii.\tMình đã kiểm tra thông tin qua nguồn chính thức chưa?\n\tiii.\tCó dấu hiệu bất thường như thúc giục, đe dọa hoặc hứa hẹn lợi ích quá lớn không?\n\tiv.\tNếu còn nghi ngờ, mình có thể hỏi ai hoặc xác minh bằng cách nào?\n\tKhông đưa ra quyết định cho đến khi hoàn thành việc kiểm tra.\n2.\tLập một bảng gồm 3 cột: có thể tin tưởng, không đủ thông tin, không đáng tin cậy.Trong 1-2 tuần, khi gặp một lời mời vào các hội nhóm hay lời mời giao dịch, hãy kiểm chứng đầy đủ thông tin và xếp vào 3 nhóm trên.\nVí dụ:\n\ti.\tCó thể tin tưởng: Website chính thức của ngân hàng, đã xác minh tên miền.\n\tii.\tChưa đủ thông tin: Một cửa hàng mới chưa từng giao dịch.\n\tiii.\tKhông nên tin tưởng: Tài khoản yêu cầu chuyển tiền gấp nhưng từ chối xác minh danh tính.",
+                    "answer_3": "Mục tiêu là ngăn chặn sự bốc đồng nhất thời do tâm lý sợ hãi hoặc lòng tham nhằm gỡ gạc lại thiệt hại.\nNếu bạn cảm thấy muốn chuyển thêm tiền hoặc thực hiện bất kỳ hành động nào để lấy lại tài sản hoặc tài khoản, hãy áp dụng quy tắc dừng 24 giờ.\nTrong thời gian đó:\n1.\tKhông chuyển tiền;\n2.\tKhông nhấp vào liên kết;\n3.\tKhông cài đặt ứng dụng theo yêu cầu của người lạ;\n4.\tKhông cung cấp mã OTP hoặc thông tin đăng nhập.\nThay vào đó, hãy trình bày tình huống với một người đáng tin cậy hoặc liên hệ ngân hàng, cơ quan chức năng để được tư vấn trước khi quyết định."
+                }
+            }
+        }
+    }
+}

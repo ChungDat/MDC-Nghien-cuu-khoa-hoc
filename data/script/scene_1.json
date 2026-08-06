@@ -1,0 +1,41 @@
+{
+    "greet": "Xin chào bạn! Kết quả phân tích dữ liệu cho thấy bạn đang duy trì một trạng thái sức khỏe tinh thần trực tuyến rất lý tưởng và kiểm soát không gian số chủ động. Đây là một biểu hiện xuất sắc! Bạn có sẵn sàng cùng mình dành 30 giây thực hiện một thử thách nhỏ để củng cố vững chắc 'màng lọc bảo vệ' này không?",
+
+    "problem":
+    {
+        "a":
+        {
+            "request": "Sẵn sàng, thử thách mình đi!",
+            "response": "Tuyệt vời! Trước tiên, hãy cho mình biết trung bình một ngày bạn dành khoảng bao nhiêu tiếng để lướt các nền tảng mạng xã hội?",
+
+            "exercise":
+            {
+                "1":
+                {
+                    "answer_1": "Dưới 2 tiếng/ngày",
+                    "response_1": "Quá xuất sắc! Bạn đang kiểm soát thời gian số vô cùng khoa học. Hãy duy trì thói quen tích cực này nhé!",
+
+                    "answer_2": "Trên 4 tiếng/ngày",
+                    "response_2": "Ồ, quỹ thời gian trên mạng xã hội hiện tại đang chiếm dụng khá lớn thời gian của bạn. Điều này dễ tích tụ hội chứng sợ bị bỏ lỡ (FOMO) ngầm. Hãy thử áp dụng phương pháp 'Cai trị thiết bị' (Device Detox): đặt điện thoại xa giường ngủ sau 21h00 tối để bộ não được nghỉ ngơi nhé."
+                },
+                
+                "2":
+                {
+                    "response": "Bây giờ, chúng ta cùng đến với thử thách tình huống thực chứng. Hãy tưởng tượng: Bạn nhận được lời mời gia nhập một hội nhóm trực tuyến giới thiệu công việc cộng tác viên làm nhiệm vụ nhận tiền thưởng, hoặc lời mời tải app hack mod game miễn phí nhưng yêu cầu cung cấp danh bạ. Bạn sẽ phản ứng thế nào?",
+
+                    "answer_1": "Tham gia/Tải thử xem sao, biết đâu kiếm được tiền hoặc trò chơi hay.",
+                    "response_1": "Dừng lại nguy hiểm! Đây chính là bẫy lừa đảo tài chính và rò rỉ dữ liệu cá nhân điển hình. Kẻ xấu thường lợi dụng lòng tin ngây thơ hoặc áp lực muốn tự chủ tài chính sớm của học sinh THPT để dẫn dụ. Hãy ghi nhớ quy tắc 'Zero-Trust trực tuyến': Không có việc nhẹ lương cao, không cài phần mềm không chính thống!",
+
+                    "answer_2": "Từ chối ngay lập tức và cảnh giác báo cáo.",
+                    "response_2": "Chúc mừng bạn! Bạn có một năng lực tư duy số cực kỳ bản lĩnh. Việc cảnh giác trước áp lực vật chất ảo chính là lá chắn mạnh nhất bảo vệ quyền riêng tư cá nhân."
+                }
+            }
+        },
+
+        "b":
+        {
+            "request": "Hiện tại mình tự ổn rồi, cảm ơn bạn!",
+            "response": "Cảm ơn bạn! Bất cứ khi nào bạn cần một không gian ẩn danh bảo mật để đánh giá lại trạng thái tinh thần, mình luôn ở đây sẵn sàng. Chúc bạn một ngày học tập thật năng động tại trường THPT Mạc Đĩnh Chi!"
+        }
+    }
+}

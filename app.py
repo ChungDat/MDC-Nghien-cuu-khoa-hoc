@@ -2,7 +2,7 @@ import warnings
 import pandas as pd
 import numpy as np
 import streamlit as st
-from utils import load_rf_model, parse_code_text_file
+from utils import load_model, parse_code_text_file, load_data
 
 # Tắt cảnh báo phiên bản unpickle của sklearn
 warnings.filterwarnings("ignore")
@@ -15,30 +15,32 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+config = load_data("config.json")
+
 # Thang đo Likert tiếng Việt (1 đến 5)
-with open('config/linkert.txt', 'r', encoding='utf-8') as f:
+with open(config["form"]["linkert"], 'r', encoding='utf-8') as f:
     LIKERT_OPTIONS = {i+1: line.strip() for i, line in enumerate(f)}
 
-Q_FILE_PATH = "config/questions.txt"
-A_FILE_PATH = "config/answers.txt"
+Q_FILE_PATH = config["form"]["questions"]
+A_FILE_PATH = config["form"]["answers"]
 
 def main():
     # Header ứng dụng bằng component chuẩn của Streamlit
     st.title("Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường")
     
     # Tải mô hình
-    rf_model = load_rf_model("rf.joblib")
-    if rf_model is None:
+    model = load_model(config["model"])
+    if model is None:
         st.stop()
         
     # Lấy danh sách đặc trưng dự kiến từ mô hình
-    if hasattr(rf_model, "feature_names_in_"):
-        expected_features = list(rf_model.feature_names_in_)
+    if hasattr(model, "feature_names_in_"):
+        expected_features = list(model.feature_names_in_)
     else:
-        n_features = getattr(rf_model, "n_features_in_", 26)
+        n_features = getattr(model, "n_features_in_", 26)
         expected_features = [f"F_{i+1:02d}" for i in range(n_features)]
         
-    n_outputs = getattr(rf_model, "n_outputs_", 7)
+    n_outputs = getattr(model, "n_outputs_", 7)
 
     # Đọc danh sách câu hỏi và danh sách chiều tác động (answers)
     questions = parse_code_text_file(Q_FILE_PATH)
@@ -126,7 +128,7 @@ def main():
         
         try:
             # Thực hiện dự đoán với Random Forest
-            raw_pred = rf_model.predict(X_df)
+            raw_pred = model.predict(X_df)
             raw_pred_df = pd.DataFrame(raw_pred, columns=['PAIS_01', 'PAIS_02', 'PAIS_03', 'PAIS_04', 'PAIS_05', 'PAIS_06', 'PAIS_07'])
             pred = np.round(raw_pred)
             pred_clamped = np.clip(pred, 1, 5)[0]  # Lấy mảng 1x7
