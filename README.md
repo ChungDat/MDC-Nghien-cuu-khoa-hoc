@@ -1,23 +1,30 @@
 # Thiết lập môi trường
+
 ## Sử dụng Anaconda
+
 1. Mở Anaconda
 2. Tạo Environment mới (chỉ cần tạo một lần)
 3. Cài các thư viện: `streamlit`, `joblib`, `scikit-learn`, `pandas`, `numpy`
 4. Mở thư mục chứa dự án và chạy lệnh:
+
 ```bash
 conda activate [tên môi trường]
 python main.py
 ```
 
 ## Sử dụng uv
+
 1. Mở thư mục chứa dự án và chạy lệnh:
+
 ```bash
 uv sync
 uv run main.py
 ```
 
 ## Sử dụng pip
+
 1. Mở thư mục chứa dự án và chạy lệnh:
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -26,15 +33,18 @@ python main.py
 ```
 
 # Cấu hình
+
 `config.json` chứa đường đẫn đến các file sử dụng trong chương trình, bao gồm:
-* Các file kịch bản
-* Câu hỏi
-* Ý nghĩa PAIS
-* Ý nghĩa điểm linkert
-* Thời gian delay của các bong bóng chat
-* Đường dẫn đến file mô hình dự đoán
+
+- Các file kịch bản
+- Câu hỏi
+- Ý nghĩa PAIS
+- Ý nghĩa điểm likert
+- Thời gian delay của các bong bóng chat
+- Đường dẫn đến file mô hình dự đoán
 
 # Lưu ý
+
 Giao diện web sẽ tự động mở khi chạy `main.py`.
 
 Nếu web không tự động mở, mở trình duyệt và truy cập `http://localhost:8501`

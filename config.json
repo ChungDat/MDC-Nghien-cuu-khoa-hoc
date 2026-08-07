@@ -1,25 +1,24 @@
 {
-    "display":
-    {
-        "delay": 0.8,
-        "cols_per_row": 4,
-        "form_title": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
-        "form_header": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
-        "scene_1_title": "Scene_1",
-        "scene_2_title": "Scene_2",
-        "scene_3_title": "Scene_3"
-    },
-    "form":
-    {
-        "answers": "data/form/answers.json",
-        "questions": "data/form/questions.json",
-        "linkert": "data/form/linkert.json"
-    },
-    "script":
-    {
-        "scene_1": "data/script/scene_1.json",
-        "scene_2": "data/script/scene_2.json",
-        "scene_3": "data/script/scene_3.json"
-    },
-    "model": "model/rf.joblib"
+  "display": {
+    "delay": 0.8,
+    "cols_per_row": 4,
+    "form_title": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
+    "form_header": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
+    "scene_1_title": "Scene_1",
+    "scene_2_title": "Scene_2",
+    "scene_3_title": "Scene_3"
+  },
+  "form": {
+    "answers": "data/form/answers.json",
+    "questions": "data/form/questions.json",
+    "likert": "data/form/likert.json"
+  },
+  "script": {
+    "scene_1": "data/script/scene_1.json",
+    "scene_2": "data/script/scene_2.json",
+    "scene_3": "data/script/scene_3.json",
+    "low_threshold": 2.4,
+    "high_threshold": 3.6
+  },
+  "model": "model/rf.joblib"
 }

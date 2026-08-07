@@ -16,7 +16,7 @@ st.set_page_config(
     layout="wide",
 )
 
-LINKERT_FILE_PATH = config["form"]["linkert"]
+LIKERT_FILE_PATH = config["form"]["likert"]
 Q_FILE_PATH = config["form"]["questions"]
 A_FILE_PATH = config["form"]["answers"]
 COLS_PER_ROW = config["display"]["cols_per_row"]
@@ -39,8 +39,8 @@ def main():
         
     n_outputs = getattr(model, "n_outputs_", 7)
 
-    # Đọc danh sách câu hỏi, danh sách chiều tác động, điểm linkert
-    linkert_options = load_data(LINKERT_FILE_PATH)
+    # Đọc danh sách câu hỏi, danh sách chiều tác động, điểm likert
+    likert_options = load_data(LIKERT_FILE_PATH)
     questions = load_data(Q_FILE_PATH)
     answers_info = load_data(A_FILE_PATH)
     
@@ -52,8 +52,8 @@ def main():
         st.warning(f"Không tìm thấy mô tả nào trong `{A_FILE_PATH}`")
         st.stop()
 
-    if not linkert_options:
-        st.warning(f"Không tìm thấy điểm Likert nào trong `{LINKERT_FILE_PATH}`")
+    if not likert_options:
+        st.warning(f"Không tìm thấy điểm Likert nào trong `{LIKERT_FILE_PATH}`")
         st.stop()
         
     st.caption("Vui lòng chọn mức độ đánh giá phù hợp nhất với bạn cho từng câu hỏi bên dưới (Thang đo Likert từ 1 đến 5).")
@@ -90,7 +90,7 @@ def main():
         for tab, (p, qs) in zip(tabs, prefixes.items()):
             with tab:
                 # Chú thích hiển thị bằng st.info
-                legend_text = " - ".join([f"**{k}**: {v}" for k, v in linkert_options.items()])
+                legend_text = " - ".join([f"**{k}**: {v}" for k, v in likert_options.items()])
                 st.info(legend_text)
                 
                 hcol1, hcol2 = st.columns([8, 2])
@@ -134,35 +134,56 @@ def main():
         X_df = pd.DataFrame([input_data])
         
         try:
-            # Thực hiện dự đoán với Random Forest
+            # Thực hiện dự đoán
             raw_pred = model.predict(X_df)
             raw_pred_df = pd.DataFrame(raw_pred, columns=['PAIS_01', 'PAIS_02', 'PAIS_03', 'PAIS_04', 'PAIS_05', 'PAIS_06', 'PAIS_07'])
             pred = np.round(raw_pred)
             pred_clamped = np.clip(pred, 1, 5)[0]  # Lấy mảng 1x7
             
-            st.header("Kết quả dự đoán tác động tâm lý")
-            
-            for i, (ans_code, ans_desc) in enumerate(answers_info.items()):
-                if i % COLS_PER_ROW == 0:
-                    cols = st.columns(COLS_PER_ROW)
-                if i < n_outputs:
-                    score = int(pred_clamped[i])
+            # Lưu kết quả vào session_state để hiển thị độc lập
+            st.session_state["form_submitted"] = True
+            st.session_state["pred_clamped"] = pred_clamped
+            st.session_state["raw_pred_df"] = raw_pred_df
+            st.session_state["X_df"] = X_df
 
-                    with cols[i % COLS_PER_ROW]:
-                        st.metric(label=f"{ans_code}", value=f"Mức {score}/5")
-                        st.caption(f"{ans_desc}")
-                st.write("")
-
-            # Khung chi tiết dữ liệu
-            with st.expander("Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
-                st.write("**Vector dữ liệu khảo sát:**")
-                st.dataframe(X_df, use_container_width=True)
-                
-                st.write("**Giá trị dự đoán gốc từ mô hình:**")
-                st.dataframe(raw_pred_df, use_container_width=True)
-                
         except Exception as e:
             st.error(f"Lỗi trong quá trình tính toán dự đoán: {e}")
+
+    if st.session_state.get("form_submitted", False):
+        pred_clamped = st.session_state["pred_clamped"]
+        raw_pred_df = st.session_state["raw_pred_df"]
+        X_df = st.session_state["X_df"]
+        
+        st.header("Kết quả dự đoán tác động tâm lý")
+        
+        for i, (ans_code, ans_desc) in enumerate(answers_info.items()):
+            if i % COLS_PER_ROW == 0:
+                cols = st.columns(COLS_PER_ROW)
+            if i < n_outputs:
+                score = int(pred_clamped[i])
+
+                with cols[i % COLS_PER_ROW]:
+                    st.metric(label=f"{ans_code}", value=f"Mức {score}/5")
+                    st.caption(f"{ans_desc}")
+            st.write("")
+
+        avg_pais = float(np.mean(pred_clamped))
+
+        # Khung chi tiết dữ liệu
+        with st.expander("Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
+            st.write("**Vector dữ liệu khảo sát:**")
+            st.dataframe(X_df, use_container_width=True)
+            
+            st.write("**Giá trị dự đoán gốc từ mô hình:**")
+            st.dataframe(raw_pred_df, use_container_width=True)
+
+        if st.button("Tiếp tục", type="primary", use_container_width=True):
+            if avg_pais <= config["script"]["low_threshold"]:
+                st.switch_page("pages/scene_1.py")
+            elif avg_pais <= config["script"]["high_threshold"]:
+                st.switch_page("pages/scene_2.py")
+            else:
+                st.switch_page("pages/scene_3.py")
 
 if __name__ == "__main__":
     main()
