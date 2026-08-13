@@ -32,6 +32,9 @@ if st.session_state.s1_path == 'b':
     render_user_text(data['problem']['b']['request'])
     render_text(data['problem']['b']['response'], delay=0.8, key='s1_b_res')
 
+    if st.button("Quay lại Trang chủ", use_container_width=True, key="s1_home_b"):
+        st.switch_page("app.py")
+
 if st.session_state.s1_path == 'a':
     render_user_text(data['problem']['a']['request'])
     render_text(data['problem']['a']['response'], delay=0.8, key='s1_a_res')
@@ -77,3 +80,6 @@ if st.session_state.s1_path == 'a':
                 render_text(data['problem']['a']['exercise']['2']['response_1'], delay=0.8, key='s1_ex2_res1')
             else:
                 render_text(data['problem']['a']['exercise']['2']['response_2'], delay=0.8, key='s1_ex2_res2')
+
+            if st.button("Quay lại Trang chủ", use_container_width=True, key="s1_home_a"):
+                st.switch_page("app.py")

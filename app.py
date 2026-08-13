@@ -2,7 +2,9 @@ import warnings
 import pandas as pd
 import numpy as np
 import streamlit as st
-from utils import load_model, load_data
+from utils import load_model, load_data, create_sidebar
+from st_supabase_connection import SupabaseConnection
+from db.queries import *
 
 # Tắt cảnh báo phiên bản unpickle của sklearn
 warnings.filterwarnings("ignore")
@@ -12,7 +14,6 @@ config = load_data("config.json")
 # Cấu hình trang Streamlit
 st.set_page_config(
     page_title=config["display"]["form_title"],
-    page_icon="📋",
     layout="wide",
 )
 
@@ -23,6 +24,7 @@ COLS_PER_ROW = config["display"]["cols_per_row"]
 
 
 def main():
+    create_sidebar()
     st.title(config["display"]["form_header"])
     
     # Tải mô hình
@@ -30,14 +32,15 @@ def main():
     if model is None:
         st.stop()
         
-    # Lấy danh sách đặc trưng dự kiến từ mô hình
+    # Lấy danh sách đặc trưng từ mô hình
     if hasattr(model, "feature_names_in_"):
         expected_features = list(model.feature_names_in_)
     else:
         n_features = getattr(model, "n_features_in_", 26)
-        expected_features = [f"F_{i+1:02d}" for i in range(n_features)]
-        
-    n_outputs = getattr(model, "n_outputs_", 7)
+        expected_features = [f"Feature_{i+1:02d}" for i in range(n_features)]
+
+    expected_targets = ["PAIS_01", "PAIS_02", "PAIS_03", "PAIS_04", "PAIS_05", "PAIS_06", "PAIS_07"]
+    n_targets = len(expected_targets)
 
     # Đọc danh sách câu hỏi, danh sách chiều tác động, điểm likert
     likert_options = load_data(LIKERT_FILE_PATH)
@@ -131,23 +134,37 @@ def main():
                 st.error(f"Bạn chưa chọn câu trả lời cho câu hỏi {feat}")
                 st.stop()
                 
-        X_df = pd.DataFrame([input_data])
+        X_df = pd.DataFrame([input_data], columns=expected_features)
         
         try:
-            # Thực hiện dự đoán
             raw_pred = model.predict(X_df)
-            raw_pred_df = pd.DataFrame(raw_pred, columns=['PAIS_01', 'PAIS_02', 'PAIS_03', 'PAIS_04', 'PAIS_05', 'PAIS_06', 'PAIS_07'])
-            pred = np.round(raw_pred)
-            pred_clamped = np.clip(pred, 1, 5)[0]  # Lấy mảng 1x7
+
+            raw_pred_df = pd.DataFrame(raw_pred, columns=expected_targets)
+            pred = np.rint(raw_pred)
+            pred_clamped = np.clip(pred, 1, 5)[0] # Lấy mảng 1x7
             
-            # Lưu kết quả vào session_state để hiển thị độc lập
             st.session_state["form_submitted"] = True
             st.session_state["pred_clamped"] = pred_clamped
             st.session_state["raw_pred_df"] = raw_pred_df
             st.session_state["X_df"] = X_df
 
+            output_data = {}
+            for feat in expected_targets:
+                output_data[feat] = int(pred_clamped[expected_targets.index(feat)])
+
+            output_data["PAIS_AVG"] = float(np.mean(pred_clamped))
+
         except Exception as e:
             st.error(f"Lỗi trong quá trình tính toán dự đoán: {e}")
+
+        try:
+            input_data_db = {str(key).lower(): value for key, value in input_data.items()}
+            output_data_db = {str(key).lower(): value for key, value in output_data.items()}
+
+            form_id = add_form(input_data_db)
+            add_prediction(form_id, output_data_db)
+        except Exception as e:
+            st.error(f"Lỗi trong quá trình lưu kết quả dự đoán: {e}")
 
     if st.session_state.get("form_submitted", False):
         pred_clamped = st.session_state["pred_clamped"]
@@ -159,7 +176,7 @@ def main():
         for i, (ans_code, ans_desc) in enumerate(answers_info.items()):
             if i % COLS_PER_ROW == 0:
                 cols = st.columns(COLS_PER_ROW)
-            if i < n_outputs:
+            if i < n_targets:
                 score = int(pred_clamped[i])
 
                 with cols[i % COLS_PER_ROW]:
@@ -169,7 +186,6 @@ def main():
 
         avg_pais = float(np.mean(pred_clamped))
 
-        # Khung chi tiết dữ liệu
         with st.expander("Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
             st.write("**Vector dữ liệu khảo sát:**")
             st.dataframe(X_df, use_container_width=True)

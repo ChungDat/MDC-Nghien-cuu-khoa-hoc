@@ -10,18 +10,15 @@ DELAY = config["display"]["delay"]
 
 inject_custom_css()
 
-# Initialize session state for tracking progress
 if 's3_a_done' not in st.session_state:
     st.session_state.s3_a_done = None
 if 's3_b_done' not in st.session_state:
     st.session_state.s3_b_done = None
 
-# Greet user
 render_text(data['greet'])
 
 problem_data = data['problem']
 
-# Stage A: Breathing Exercise
 render_text(problem_data['a']['response'], delay=DELAY, key="s3_a_res")
 
 if st.session_state.s3_a_done is None:
@@ -36,7 +33,6 @@ if st.session_state.s3_a_done is not None:
     choice_a = st.session_state.s3_a_done
     render_user_text(problem_data['a'][f'answer_{choice_a}'])
     
-    # Stage B: Emergency Protocol
     render_text(problem_data['b']['response'], delay=DELAY, key="s3_b_res")
     
     if st.session_state.s3_b_done is None:
@@ -51,5 +47,8 @@ if st.session_state.s3_a_done is not None:
         choice_b = st.session_state.s3_b_done
         render_user_text(problem_data['b'][f'answer_{choice_b}'])
         
-        # Render final response based on choice B
         render_text(problem_data['b'][f'response_{choice_b}'], delay=DELAY, key=f"s3_b_res_{choice_b}")
+
+        if st.button("Quay lại Trang chủ", use_container_width=True, key=f's3_home_{choice_b}'):
+            st.switch_page("app.py")
+

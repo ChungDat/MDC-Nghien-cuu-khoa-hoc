@@ -15,27 +15,6 @@ def load_model(model_path="rf.joblib"):
         st.error(f"Lỗi khi tải mô hình từ `{model_path}`: {e}")
         return None
 
-# def parse_code_text_file(file_path):
-#     """Đọc động các tệp định dạng 'code: text'"""
-#     items = []
-#     if not os.path.exists(file_path):
-#         return items
-    
-#     with open(file_path, "r", encoding="utf-8") as f:
-#         for line in f:
-#             line_str = line.strip()
-#             if not line_str or line_str.startswith("#"):
-#                 continue
-#             if ":" in line_str:
-#                 parts = line_str.split(":", 1)
-#                 code = parts[0].strip()
-#                 text = parts[1].strip()
-#             else:
-#                 code = f"ITEM_{len(items)+1:02d}"
-#                 text = line_str
-#             items.append({"code": code, "text": text})
-#     return items
-
 def load_data(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -131,3 +110,9 @@ def render_user_text(text, delay=0, key=None):
         }}
         </style>
         """, unsafe_allow_html=True)
+
+def create_sidebar():
+    with st.sidebar:
+        st.write("**Điều hướng**")
+        st.page_link("app.py", label="Khảo sát")
+        st.page_link("pages/dashboard.py", label="Dashboard")

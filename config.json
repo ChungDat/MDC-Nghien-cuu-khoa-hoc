@@ -6,7 +6,8 @@
     "form_header": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
     "scene_1_title": "Scene_1",
     "scene_2_title": "Scene_2",
-    "scene_3_title": "Scene_3"
+    "scene_3_title": "Scene_3",
+    "dashboard_title": "Bảng Điều Khiển Quản Trị"
   },
   "form": {
     "answers": "data/form/answers.json",
@@ -20,5 +21,5 @@
     "low_threshold": 2.4,
     "high_threshold": 3.6
   },
-  "model": "model/rf.joblib"
+  "model": "models/v1_rf.joblib"
 }
