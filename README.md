@@ -1,10 +1,15 @@
+# TODO
+* Sửa lỗi bong bóng chat
+* Sửa lỗi submit nhiều lần
+* Refactor code 
+
 # Thiết lập môi trường
 
 ## Sử dụng Anaconda
 
 1. Mở Anaconda
 2. Tạo Environment mới (chỉ cần tạo một lần)
-3. Cài các thư viện: `streamlit`, `joblib`, `scikit-learn`, `pandas`, `numpy`
+3. Cài các thư viện: `streamlit`, `joblib`, `scikit-learn`, `pandas`, `numpy`, `supabase`
 4. Mở thư mục chứa dự án và chạy lệnh:
 
 ```bash
@@ -66,3 +71,41 @@ Khi cần thụt dòng trong content thì dùng `\t` ngay sau vị trí muốn t
 Nếu nội dung trong `value` chứa dấu trùng với dấu bao `value` thì dùng dấu `\` ngay trước dấu trùng đó (ví dụ: "vi du `\"`abc`\"`" hoặc 'vi du `\'`abc`\'`').
 
 Nếu nội dung trong `value` không chứa dấu trùng thì không cần dùng dấu `\` (ví dụ: xyz: "vi du `'`abc`'`" hoặc xyz: 'vi du `"`abc`"`').
+
+# Các file cấu hình
+* `.streamlit/secrets.toml`: Chứa các thông tin nhạy cảm, bao gồm mật khẩu quản trị và thông tin kết nối Supabase, KHÔNG UPLOAD file này.
+* `.streamlit/config.toml`: Chứa các thiết lập cho giao diện Streamlit (hiện tại để ẩn sidebar).
+* `config.json`: Chứa các đường dẫn đến các file sử dụng trong chương trình.
+
+# Các thư mục/file quan trọng
+```
+./
+|   .streamlit/
+|   |   secrets.toml
+|   |   config.toml
+|   data/
+|   |   form/
+|   |   |   questions.json
+|   |   |   answers.json
+|   |   |   likert.json
+|   |   script/
+|   |   |   scene_1.json
+|   |   |   scene_2.json
+|   |   |   scene_3.json
+|   db
+|   |   queries.py
+|   models
+|   |   v1_rf.joblib
+|   pages/
+|   |   scene_1.py
+|   |   scene_2.py
+|   |   scene_3.py
+|   |   dashboard.py
+|   supabase/
+|   |   migrations/
+|   app.py
+|   main.py
+|   config.json
+|   README.md
+|   utils.py
+```

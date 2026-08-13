@@ -10,3 +10,5 @@ wheels/
 .venv
 
 *.xlsx
+.streamlit/secrets.toml
+node_modules/
