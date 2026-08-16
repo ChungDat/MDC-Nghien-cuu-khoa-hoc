@@ -2,16 +2,13 @@ import warnings
 import pandas as pd
 import numpy as np
 import streamlit as st
-from utils import load_model, load_data, create_sidebar
-from st_supabase_connection import SupabaseConnection
-from db.queries import *
+from utils import load_model, load_data, create_sidebar, init_session_state, reset_session_state
+from db.queries import add_form, add_prediction
 
-# Tắt cảnh báo phiên bản unpickle của sklearn
 warnings.filterwarnings("ignore")
 
 config = load_data("config.json")
 
-# Cấu hình trang Streamlit
 st.set_page_config(
     page_title=config["display"]["form_title"],
     layout="wide",
@@ -22,26 +19,43 @@ Q_FILE_PATH = config["form"]["questions"]
 A_FILE_PATH = config["form"]["answers"]
 COLS_PER_ROW = config["display"]["cols_per_row"]
 
+init_session_state()
+
+def _set_all_answers(questions: dict, value_fn):
+    """Set all question answers in session state and rerun."""
+    for q in questions:
+        st.session_state[f"q_{q}"] = value_fn()
+    st.rerun()
+
+def on_model_change():
+    st.session_state["form_submitted"] = False
+
+models = {
+    "Random Forest": "models/v1_rf.joblib",
+    "Linear Regression": "models/v1_lr.joblib",
+    "Ordinal Logistic Regression": "models/v1_olr.joblib"
+}
 
 def main():
     create_sidebar()
+
     st.title(config["display"]["form_header"])
-    
+
     # Tải mô hình
-    model = load_model(config["model"])
+    model_name = st.selectbox(
+        "Chọn mô hình",
+        options=list(models.keys()),
+        index=0,
+        on_change=on_model_change
+    )
+    
+    model = load_model(models[model_name])
     if model is None:
+        st.error("Không thể tải mô hình")
         st.stop()
-        
-    # Lấy danh sách đặc trưng từ mô hình
-    if hasattr(model, "feature_names_in_"):
-        expected_features = list(model.feature_names_in_)
     else:
-        n_features = getattr(model, "n_features_in_", 26)
-        expected_features = [f"Feature_{i+1:02d}" for i in range(n_features)]
-
-    expected_targets = ["PAIS_01", "PAIS_02", "PAIS_03", "PAIS_04", "PAIS_05", "PAIS_06", "PAIS_07"]
-    n_targets = len(expected_targets)
-
+        st.success("Đã tải mô hình thành công")
+            
     # Đọc danh sách câu hỏi, danh sách chiều tác động, điểm likert
     likert_options = load_data(LIKERT_FILE_PATH)
     questions = load_data(Q_FILE_PATH)
@@ -59,25 +73,31 @@ def main():
         st.warning(f"Không tìm thấy điểm Likert nào trong `{LIKERT_FILE_PATH}`")
         st.stop()
         
+    # Lấy danh sách đặc trưng từ mô hình
+    base_m = model[0] if isinstance(model, list) else model
+    
+    if hasattr(base_m, "feature_names_in_"):
+        expected_features = list(base_m.feature_names_in_)
+    else:
+        # Fall back to using the exact keys from the questions file
+        expected_features = list(questions.keys())
+
+    expected_targets = ["PAIS_01", "PAIS_02", "PAIS_03", "PAIS_04", "PAIS_05", "PAIS_06", "PAIS_07"]
+    n_targets = len(expected_targets)
+    
     st.caption("Vui lòng chọn mức độ đánh giá phù hợp nhất với bạn cho từng câu hỏi bên dưới (Thang đo Likert từ 1 đến 5).")
     
     # Thanh công cụ nhanh: Chọn ngẫu nhiên / Đặt lại / Xoá câu trả lời
     col_act1, col_act2, col_act3, _ = st.columns([2, 2, 2, 4])
     with col_act1:
         if st.button("Chọn ngẫu nhiên câu trả lời"):
-            for q in questions.keys():
-                st.session_state[f"q_{q}"] = int(np.random.randint(1, 6))
-            st.rerun()
+            _set_all_answers(questions, lambda: int(np.random.randint(1, 6)))
     with col_act2:
         if st.button("Đặt lại về Trung lập (3)"):
-            for q in questions.keys():
-                st.session_state[f"q_{q}"] = 3
-            st.rerun()
+            _set_all_answers(questions, lambda: 3)
     with col_act3:
         if st.button("Xoá tất cả câu trả lời"):
-            for q in questions.keys():
-                st.session_state[f"q_{q}"] = None
-            st.rerun()
+            _set_all_answers(questions, lambda: None)
 
     # Form khảo sát với các Radio Button
     with st.form("likert_vietnamese_form", clear_on_submit=False):
@@ -102,15 +122,13 @@ def main():
                 st.divider()
 
                 for q in qs:
-                    key = f"q_{q}"
-                    default_val = st.session_state.get(key, 3)
-                    
+                    key = f"q_{q}"                    
                     col1, col2 = st.columns([8, 2], vertical_alignment="center")
-                    col1.write(f"{questions[q]}")
+                    col1.write(questions[q])
                     
                     with col2:
                         val = st.radio(
-                            label=f"Chọn câu trả lời cho {q}",
+                            label=f"a_{q}",
                             options=[1, 2, 3, 4, 5],
                             index=None,
                             key=key,
@@ -121,55 +139,63 @@ def main():
                         user_answers[q] = val
                     st.divider()
                 
-        submit_btn = st.form_submit_button("Gửi Khảo Sát & Phân Tích Kết Quả", type="primary", use_container_width=True)
+        submit_btn = st.form_submit_button(
+            "Gửi Khảo Sát & Phân Tích Kết Quả",
+            type="primary",
+            disabled=st.session_state["form_submitted"],
+            use_container_width=True
+        )
 
-    # Xử lý kết quả dự đoán
     if submit_btn:
+        missing = [feat for feat in expected_features if feat not in user_answers]
+        if missing:
+            st.error(f"Bạn chưa chọn câu trả lời cho câu hỏi {missing[0]}")
+            st.stop()
+        else:
+            st.session_state["form_submitted"] = True
+            st.rerun()
+
+    if st.session_state["form_submitted"]:
         # Chuẩn bị vector đặc trưng đúng theo thứ tự mô hình yêu cầu
         input_data = {}
         for feat in expected_features:
-            if feat in user_answers:
-                input_data[feat] = user_answers[feat]
-            else:
-                st.error(f"Bạn chưa chọn câu trả lời cho câu hỏi {feat}")
-                st.stop()
+            input_data[feat] = user_answers[feat]
                 
-        X_df = pd.DataFrame([input_data], columns=expected_features)
-        
-        try:
+        X_df = pd.DataFrame([input_data])
+
+        if isinstance(model, list):
+            # OLR model is a list of 7 sub-models
+            preds = []
+            for sub_model in model:
+                preds.append(sub_model.predict(X_df)[0])
+            raw_pred = np.array([preds])
+        else:
             raw_pred = model.predict(X_df)
-
-            raw_pred_df = pd.DataFrame(raw_pred, columns=expected_targets)
-            pred = np.rint(raw_pred)
-            pred_clamped = np.clip(pred, 1, 5)[0] # Lấy mảng 1x7
             
-            st.session_state["form_submitted"] = True
-            st.session_state["pred_clamped"] = pred_clamped
-            st.session_state["raw_pred_df"] = raw_pred_df
-            st.session_state["X_df"] = X_df
+        raw_pred_df = pd.DataFrame(raw_pred, columns=expected_targets)
 
-            output_data = {}
-            for feat in expected_targets:
-                output_data[feat] = int(pred_clamped[expected_targets.index(feat)])
+        pred = np.rint(raw_pred)
+        pred_clamped = np.clip(pred, 1, 5)[0] # Lấy mảng 1x7
+        
+        st.session_state["pred_clamped"] = pred_clamped
+        st.session_state["raw_pred_df"] = raw_pred_df
+        st.session_state["X_df"] = X_df
 
-            output_data["PAIS_AVG"] = float(np.mean(pred_clamped))
+        avg_pais = float(np.mean(pred_clamped))
 
-        except Exception as e:
-            st.error(f"Lỗi trong quá trình tính toán dự đoán: {e}")
+        output_data = {}
+        for i, feat in enumerate(expected_targets):
+            output_data[feat] = int(pred_clamped[i])
+        output_data["PAIS_AVG"] = avg_pais
 
         try:
             input_data_db = {str(key).lower(): value for key, value in input_data.items()}
             output_data_db = {str(key).lower(): value for key, value in output_data.items()}
 
             form_id = add_form(input_data_db)
-            add_prediction(form_id, output_data_db)
+            add_prediction(form_id, output_data_db, model_name=model_name)
         except Exception as e:
             st.error(f"Lỗi trong quá trình lưu kết quả dự đoán: {e}")
-
-    if st.session_state.get("form_submitted", False):
-        pred_clamped = st.session_state["pred_clamped"]
-        raw_pred_df = st.session_state["raw_pred_df"]
-        X_df = st.session_state["X_df"]
         
         st.header("Kết quả dự đoán tác động tâm lý")
         
@@ -180,11 +206,9 @@ def main():
                 score = int(pred_clamped[i])
 
                 with cols[i % COLS_PER_ROW]:
-                    st.metric(label=f"{ans_code}", value=f"Mức {score}/5")
-                    st.caption(f"{ans_desc}")
-            st.write("")
-
-        avg_pais = float(np.mean(pred_clamped))
+                    st.metric(label=ans_code, value=f"Mức {score}/5")
+                    st.caption(ans_desc)
+        st.write("")
 
         with st.expander("Chi tiết dữ liệu đầu vào và giá trị chưa làm tròn"):
             st.write("**Vector dữ liệu khảo sát:**")
@@ -201,5 +225,4 @@ def main():
             else:
                 st.switch_page("pages/scene_3.py")
 
-if __name__ == "__main__":
-    main()
+main()

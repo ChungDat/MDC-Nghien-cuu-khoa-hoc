@@ -1,118 +1,94 @@
-import streamlit as st
 import os
-import joblib
 import json
+import joblib
+import streamlit as st
+
 
 @st.cache_resource
-def load_model(model_path="rf.joblib"):
+def load_model(model_path: str = "rf.joblib"):
+    """Load and cache a joblib model from disk."""
     if not os.path.exists(model_path):
         st.error(f"Không tìm thấy tệp mô hình `{model_path}`!")
         return None
     try:
-        model = joblib.load(model_path)
-        return model
+        return joblib.load(model_path)
     except Exception as e:
         st.error(f"Lỗi khi tải mô hình từ `{model_path}`: {e}")
         return None
 
-def load_data(file_path):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        return json.load(f)
 
-def inject_custom_css():
-    st.markdown("""
-<style>
-@keyframes floatUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-.fade-in {
-    animation: floatUp 0.8s ease-out both;
-}
-.chat-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.chat-bubble {
-    background-color: #2b2b2b;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    color: #ffffff;
-    font-size: 16px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    max-width: 85%;
-    align-self: flex-start;
-    white-space: pre-wrap;
-}
-.chat-bubble-user {
-    background-color: #007bff;
-    color: white;
-    align-self: flex-end;
-}
-/* Light mode support */
-@media (prefers-color-scheme: light) {
-    .chat-bubble {
-        background-color: #f1f1f1;
-        color: #333333;
-    }
-    .chat-bubble-user {
-        background-color: #007bff;
-        color: white;
-    }
-}
-</style>
-""", unsafe_allow_html=True)
+@st.cache_data
+def load_data(file_path: str):
+    """Read a JSON file and return its contents. Cached per file path for the session."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        st.error(f"Không tìm thấy tệp: `{file_path}`")
+        return None
+    except json.JSONDecodeError as e:
+        st.error(f"Lỗi khi đọc tệp JSON `{file_path}`: {e}")
+        return None
 
-def render_text(text, delay=0, key=None):
-    anim_delay = 0
-    if delay > 0 and key:
-        if key not in st.session_state:
-            st.session_state[key] = True
-            anim_delay = delay
-            
-    style = f"animation-delay: {anim_delay}s;" if anim_delay > 0 else ""
-    st.markdown(f'<div class="chat-container"><div class="fade-in chat-bubble" style="{style}">{text}</div></div>', unsafe_allow_html=True)
-    
-    if anim_delay > 0:
-        st.markdown(f"""
-        <style>
-        div.stButton {{
-            animation: floatUp 0.8s ease-out both !important;
-            animation-delay: {anim_delay}s !important;
-        }}
-        </style>
-        """, unsafe_allow_html=True)
-
-def render_user_text(text, delay=0, key=None):
-    anim_delay = 0
-    if delay > 0 and key:
-        if key not in st.session_state:
-            st.session_state[key] = True
-            anim_delay = delay
-            
-    style = f"animation-delay: {anim_delay}s;" if anim_delay > 0 else ""
-    st.markdown(f'<div class="chat-container"><div class="fade-in chat-bubble chat-bubble-user" style="{style}">{text}</div></div>', unsafe_allow_html=True)
-
-    if anim_delay > 0:
-        st.markdown(f"""
-        <style>
-        div.stButton {{
-            animation: floatUp 0.8s ease-out both !important;
-            animation-delay: {anim_delay}s !important;
-        }}
-        </style>
-        """, unsafe_allow_html=True)
 
 def create_sidebar():
     with st.sidebar:
         st.write("**Điều hướng**")
         st.page_link("app.py", label="Khảo sát")
         st.page_link("pages/dashboard.py", label="Dashboard")
+
+
+def init_session_state():
+    """Khởi tạo tất cả các biến session state mặc định."""
+    defaults = {
+        "form_submitted": False,
+        "pred_clamped": None,
+        "raw_pred_df": None,
+        "X_df": None,
+        "authenticated": False,
+        "s1_path": None,
+        "s1_ex1": None,
+        "s1_ex2": None,
+        "s2_path": None,
+        "s2_ex1": None,
+        "s2_ex2_done": False,
+        "s3_a_done": None,
+        "s3_b_done": None,
+    }
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
+def reset_session_state():
+    """Reset all survey-related session state keys to start fresh."""
+    keys_to_keep = ["authenticated"]
+    for key in list(st.session_state.keys()):
+        if key not in keys_to_keep:
+            del st.session_state[key]
+
+
+def scene_page_setup(scene_key: str) -> tuple[dict, float]:
+    """
+    Shared setup for scene pages.
+
+    Loads config + scene data, configures the page, injects CSS, and
+    initialises session state. Call once at module level in each scene page.
+
+    Parameters:
+        scene_key: Key used in config.json, e.g. 'scene_1', 'scene_2', 'scene_3'.
+
+    Returns:
+        (data, delay) — the parsed scene script dict and the animation delay value.
+    """
+    from ui import inject_custom_css  # local import avoids circular dependency
+
+    config = load_data("config.json")
+    st.set_page_config(
+        page_title=config["display"][f"{scene_key}_title"],
+        layout="centered",
+    )
+    data = load_data(config["script"][scene_key])
+    delay: float = config["display"]["delay"]
+    inject_custom_css()
+    init_session_state()
+    return data, delay

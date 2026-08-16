@@ -4,9 +4,9 @@
     "cols_per_row": 4,
     "form_title": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
     "form_header": "Khảo sát thực trạng tổn thương trên không gian mạng và hệ quả học đường",
-    "scene_1_title": "Scene_1",
-    "scene_2_title": "Scene_2",
-    "scene_3_title": "Scene_3",
+    "scene_1_title": "Tình huống 1 - Mức tác động thấp",
+    "scene_2_title": "Tình huống 2 - Mức tác động trung bình",
+    "scene_3_title": "Tình huống 3 - Mức tác động cao",
     "dashboard_title": "Bảng Điều Khiển Quản Trị"
   },
   "form": {
