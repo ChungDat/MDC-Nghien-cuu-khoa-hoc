@@ -1,21 +1,8 @@
 import streamlit as st
-from utils import load_data, inject_custom_css, render_text, render_user_text
+from utils import scene_page_setup, reset_session_state
+from ui import render_text, render_user_text
 
-config = load_data("config.json")
-
-st.set_page_config(page_title=config["display"]["scene_2_title"], layout="centered")
-
-data = load_data(config["script"]["scene_2"])
-inject_custom_css()
-
-DELAY = config["display"]["delay"]
-
-if 's2_path' not in st.session_state:
-    st.session_state.s2_path = None
-if 's2_ex1' not in st.session_state:
-    st.session_state.s2_ex1 = None
-if 's2_ex2_done' not in st.session_state:
-    st.session_state.s2_ex2_done = False
+data, DELAY = scene_page_setup("scene_2")
 
 render_text(data['greet'])
 
@@ -72,4 +59,5 @@ if st.session_state.s2_path is not None:
             render_text(problem_data['exercise']['3'][f'answer_{choice}'], delay=DELAY, key=f's2_ex3_{choice}_ans')
 
             if st.button("Quay lại Trang chủ", use_container_width=True, key=f's2_home_{choice}'):
+                reset_session_state()
                 st.switch_page("app.py")

@@ -1,7 +1,5 @@
 # TODO
 * Sửa lỗi bong bóng chat
-* Sửa lỗi submit nhiều lần
-* Refactor code 
 
 # Thiết lập môi trường
 

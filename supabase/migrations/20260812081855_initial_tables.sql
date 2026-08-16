@@ -48,6 +48,8 @@ create table predictions (
     pais_07 likert_score not null,
     pais_avg real not null,
 
+    model text not null,
+
     created_at timestamptz not null default now()
 );
 

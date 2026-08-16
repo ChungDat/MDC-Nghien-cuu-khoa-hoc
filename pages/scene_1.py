@@ -1,19 +1,8 @@
 import streamlit as st
-from utils import load_data, inject_custom_css, render_text, render_user_text
+from utils import scene_page_setup, reset_session_state
+from ui import render_text, render_user_text
 
-config = load_data("config.json")
-
-st.set_page_config(page_title=config["display"]["scene_1_title"], layout="centered")
-
-data = load_data(config['script']['scene_1'])
-inject_custom_css()
-
-if 's1_path' not in st.session_state:
-    st.session_state.s1_path = None
-if 's1_ex1' not in st.session_state:
-    st.session_state.s1_ex1 = None
-if 's1_ex2' not in st.session_state:
-    st.session_state.s1_ex2 = None
+data, DELAY = scene_page_setup("scene_1")
 
 render_text(data['greet'])
 
@@ -30,14 +19,15 @@ if st.session_state.s1_path is None:
 
 if st.session_state.s1_path == 'b':
     render_user_text(data['problem']['b']['request'])
-    render_text(data['problem']['b']['response'], delay=0.8, key='s1_b_res')
+    render_text(data['problem']['b']['response'], delay=DELAY, key='s1_b_res')
 
     if st.button("Quay lại Trang chủ", use_container_width=True, key="s1_home_b"):
+        reset_session_state()
         st.switch_page("app.py")
 
 if st.session_state.s1_path == 'a':
     render_user_text(data['problem']['a']['request'])
-    render_text(data['problem']['a']['response'], delay=0.8, key='s1_a_res')
+    render_text(data['problem']['a']['response'], delay=DELAY, key='s1_a_res')
     
     if st.session_state.s1_ex1 is None:
         col1, col2 = st.columns(2)
@@ -55,11 +45,11 @@ if st.session_state.s1_path == 'a':
         render_user_text(data['problem']['a']['exercise']['1'][f'answer_{choice_1}'])
         
         if choice_1 == '1':
-            render_text(data['problem']['a']['exercise']['1']['response_1'], delay=0.8, key='s1_ex1_res1')
+            render_text(data['problem']['a']['exercise']['1']['response_1'], delay=DELAY, key='s1_ex1_res1')
         else:
-            render_text(data['problem']['a']['exercise']['1']['response_2'], delay=0.8, key='s1_ex1_res2')
+            render_text(data['problem']['a']['exercise']['1']['response_2'], delay=DELAY, key='s1_ex1_res2')
             
-        render_text(data['problem']['a']['exercise']['2']['response'], delay=0.8, key='s1_ex2_prompt')
+        render_text(data['problem']['a']['exercise']['2']['response'], delay=DELAY, key='s1_ex2_prompt')
         
         if st.session_state.s1_ex2 is None:
             col1, col2 = st.columns(2)
@@ -77,9 +67,10 @@ if st.session_state.s1_path == 'a':
             render_user_text(data['problem']['a']['exercise']['2'][f'answer_{choice_2}'])
             
             if choice_2 == '1':
-                render_text(data['problem']['a']['exercise']['2']['response_1'], delay=0.8, key='s1_ex2_res1')
+                render_text(data['problem']['a']['exercise']['2']['response_1'], delay=DELAY, key='s1_ex2_res1')
             else:
-                render_text(data['problem']['a']['exercise']['2']['response_2'], delay=0.8, key='s1_ex2_res2')
+                render_text(data['problem']['a']['exercise']['2']['response_2'], delay=DELAY, key='s1_ex2_res2')
 
             if st.button("Quay lại Trang chủ", use_container_width=True, key="s1_home_a"):
+                reset_session_state()
                 st.switch_page("app.py")
