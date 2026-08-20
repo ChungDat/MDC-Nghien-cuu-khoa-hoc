@@ -22,12 +22,12 @@ COLS_PER_ROW = config["display"]["cols_per_row"]
 init_session_state()
 
 def _set_all_answers(questions: dict, value_fn):
-    """Set all question answers in session state and rerun."""
+    """Đặt tất cả câu trả lời trong session state và chạy lại trang."""
     for q in questions:
         st.session_state[f"q_{q}"] = value_fn()
     st.rerun()
 
-def on_model_change():
+def on_input_change():
     st.session_state["form_submitted"] = False
 
 models = {
@@ -42,12 +42,13 @@ def main():
     st.title(config["display"]["form_header"])
 
     # Tải mô hình
-    model_name = st.selectbox(
-        "Chọn mô hình",
-        options=list(models.keys()),
-        index=0,
-        on_change=on_model_change
-    )
+    # model_name = st.selectbox(
+    #     "Chọn mô hình",
+    #     options=list(models.keys()),
+    #     index=0,
+    #     on_change=on_input_change
+    # )
+    model_name = "Linear Regression" # Nếu muốn cho phép người dùng chọn mô hình thì un-comment code trên và xoá dòng này
     
     model = load_model(models[model_name])
     if model is None:
@@ -79,7 +80,7 @@ def main():
     if hasattr(base_m, "feature_names_in_"):
         expected_features = list(base_m.feature_names_in_)
     else:
-        # Fall back to using the exact keys from the questions file
+        # Dự phòng: dùng đúng các khóa từ tệp câu hỏi
         expected_features = list(questions.keys())
 
     expected_targets = ["PAIS_01", "PAIS_02", "PAIS_03", "PAIS_04", "PAIS_05", "PAIS_06", "PAIS_07"]
@@ -88,16 +89,19 @@ def main():
     st.caption("Vui lòng chọn mức độ đánh giá phù hợp nhất với bạn cho từng câu hỏi bên dưới (Thang đo Likert từ 1 đến 5).")
     
     # Thanh công cụ nhanh: Chọn ngẫu nhiên / Đặt lại / Xoá câu trả lời
-    col_act1, col_act2, col_act3, _ = st.columns([2, 2, 2, 4])
-    with col_act1:
-        if st.button("Chọn ngẫu nhiên câu trả lời"):
-            _set_all_answers(questions, lambda: int(np.random.randint(1, 6)))
-    with col_act2:
-        if st.button("Đặt lại về Trung lập (3)"):
-            _set_all_answers(questions, lambda: 3)
-    with col_act3:
-        if st.button("Xoá tất cả câu trả lời"):
-            _set_all_answers(questions, lambda: None)
+    # col_act1, col_act2, col_act3, _ = st.columns([2, 2, 2, 4])
+    # with col_act1:
+    #     if st.button("Chọn ngẫu nhiên câu trả lời"):
+    #         _set_all_answers(questions, lambda: int(np.random.randint(1, 6)))
+    # with col_act2:
+    #     if st.button("Đặt lại về Trung lập (3)"):
+    #         _set_all_answers(questions, lambda: 3)
+    # with col_act3:
+    #     if st.button("Xoá tất cả câu trả lời"):
+    #         _set_all_answers(questions, lambda: None)
+
+    if st.button("Xoá tất cả câu trả lời", on_click=on_input_change):
+        _set_all_answers(questions, lambda: None)
 
     # Form khảo sát với các Radio Button
     with st.form("likert_vietnamese_form", clear_on_submit=False):
@@ -133,7 +137,7 @@ def main():
                             index=None,
                             key=key,
                             horizontal=True,
-                            label_visibility="collapsed"
+                            label_visibility="collapsed",
                         )
                     if val:
                         user_answers[q] = val
@@ -164,7 +168,7 @@ def main():
         X_df = pd.DataFrame([input_data])
 
         if isinstance(model, list):
-            # OLR model is a list of 7 sub-models
+            # Mô hình OLR là danh sách gồm 7 mô hình con
             preds = []
             for sub_model in model:
                 preds.append(sub_model.predict(X_df)[0])

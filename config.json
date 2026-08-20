@@ -21,5 +21,5 @@
     "low_threshold": 2.4,
     "high_threshold": 3.6
   },
-  "model": "models/v1_rf.joblib"
+  "model": "models/v1_lr.joblib"
 }
