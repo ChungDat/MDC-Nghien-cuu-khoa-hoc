@@ -1,0 +1,14 @@
+name: Wake Streamlit App
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Streamlit app
+        run: curl -L --fail --max-time 60 https://mdc-cbt.streamlit.app/
