@@ -6,7 +6,7 @@ import streamlit as st
 
 @st.cache_resource
 def load_model(model_path: str = "rf.joblib"):
-    """Load and cache a joblib model from disk."""
+    """Tải và cache mô hình joblib từ đĩa cứng."""
     if not os.path.exists(model_path):
         st.error(f"Không tìm thấy tệp mô hình `{model_path}`!")
         return None
@@ -19,12 +19,12 @@ def load_model(model_path: str = "rf.joblib"):
 
 @st.cache_data
 def load_data(file_path: str):
-    """Read a JSON file and return its contents. Cached per file path for the session."""
+    """Đọc file JSON và trả về nội dung. Được cache theo đường dẫn file trong suốt phiên làm việc."""
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             return json.load(f)
     except FileNotFoundError:
-        st.error(f"Không tìm thấy tệp: `{file_path}`")
+        st.error(f"Không tìm thấy file: `{file_path}`")
         return None
     except json.JSONDecodeError as e:
         st.error(f"Lỗi khi đọc tệp JSON `{file_path}`: {e}")
@@ -60,7 +60,7 @@ def init_session_state():
             st.session_state[key] = value
 
 def reset_session_state():
-    """Reset all survey-related session state keys to start fresh."""
+    """Khôi phục tất cả các khóa session state liên quan đến khảo sát về trạng thái ban đầu."""
     keys_to_keep = ["authenticated"]
     for key in list(st.session_state.keys()):
         if key not in keys_to_keep:
@@ -69,18 +69,18 @@ def reset_session_state():
 
 def scene_page_setup(scene_key: str) -> tuple[dict, float]:
     """
-    Shared setup for scene pages.
+    Thiết lập chung cho các trang scene.
 
-    Loads config + scene data, configures the page, injects CSS, and
-    initialises session state. Call once at module level in each scene page.
+    Tải cấu hình và dữ liệu scene, cấu hình trang, chèn CSS và
+    khởi tạo session state. Gọi một lần ở cấp module trong mỗi trang scene.
 
-    Parameters:
-        scene_key: Key used in config.json, e.g. 'scene_1', 'scene_2', 'scene_3'.
+    Tham số:
+        scene_key: Khóa sử dụng trong config.json, ví dụ: 'scene_1', 'scene_2', 'scene_3'.
 
-    Returns:
-        (data, delay) — the parsed scene script dict and the animation delay value.
+    Trả về:
+        (data, delay) — dict kịch bản scene đã phân tích và giá trị delay hoạt ảnh.
     """
-    from ui import inject_custom_css  # local import avoids circular dependency
+    from ui import inject_custom_css  # import cục bộ để tránh phụ thuộc vòng lập
 
     config = load_data("config.json")
     st.set_page_config(

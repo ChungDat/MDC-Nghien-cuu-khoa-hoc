@@ -7,7 +7,7 @@
 
 1. Mở Anaconda
 2. Tạo Environment mới (chỉ cần tạo một lần)
-3. Cài các thư viện: `streamlit`, `joblib`, `scikit-learn`, `pandas`, `numpy`, `supabase`
+3. Cài các thư viện: `joblib`, `mord`, `pandas`, `scikit-learn`, `numpy`, `streamlit`, `supabase`
 4. Mở thư mục chứa dự án và chạy lệnh:
 
 ```bash
@@ -22,17 +22,6 @@ python main.py
 ```bash
 uv sync
 uv run main.py
-```
-
-## Sử dụng pip
-
-1. Mở thư mục chứa dự án và chạy lệnh:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-python main.py
 ```
 
 # Cấu hình
@@ -52,34 +41,16 @@ Giao diện web sẽ tự động mở khi chạy `main.py`.
 
 Nếu web không tự động mở, mở trình duyệt và truy cập `http://localhost:8501`
 
-Khi cần ngắt kết nối, nhấn `Ctrl + C` trong terminal đã dùng để chạy `main.py`
-
-Khi muốn thay đổi nội dung, **GIỮ NGUYÊN** các `key` (phần nằm trước dấu `:`), chỉ sửa đổi phần `value` (sau dấu `:`) nếu chưa hiểu rõ code.
-
-Phần nội dung cần được viết liên tục, không xuống dòng bằng Enter.
-
-Khi cần xuống dòng trong content thì dùng `\n` ngay sau vị trí muốn xuống dòng ("vi du`\n`abc").
-
-Khi cần thụt dòng trong content thì dùng `\t` ngay sau vị trí muốn thụt dòng ("vi du`\t`abc").
-
-`key` (trước dấu `:`) cần được đặt trong dấu `''` hoặc `""`.
-
-`value` (sau dấu `:`) cần được đặt trong dấu `''` hoặc `""` nếu là chuỗi ký tự, không cần nếu là số.
-
-Nếu nội dung trong `value` chứa dấu trùng với dấu bao `value` thì dùng dấu `\` ngay trước dấu trùng đó (ví dụ: "vi du `\"`abc`\"`" hoặc 'vi du `\'`abc`\'`').
-
-Nếu nội dung trong `value` không chứa dấu trùng thì không cần dùng dấu `\` (ví dụ: xyz: "vi du `'`abc`'`" hoặc xyz: 'vi du `"`abc`"`').
-
 # Các file cấu hình
-* `.streamlit/secrets.toml`: Chứa các thông tin nhạy cảm, bao gồm mật khẩu quản trị và thông tin kết nối Supabase, KHÔNG UPLOAD file này.
-* `.streamlit/config.toml`: Chứa các thiết lập cho giao diện Streamlit (hiện tại để ẩn sidebar).
+* `.streamlit/secrets.toml`: Chứa các thông tin nhạy cảm, bao gồm mật khẩu quản trị và thông tin kết nối Supabase, KHÔNG UPLOAD file này, dán nội dung vào phần secret của streamlit cloud.
+* `.streamlit/config.toml`: Chứa các thiết lập cho giao diện Streamlit (Để ẩn sidebar mặc định).
 * `config.json`: Chứa các đường dẫn đến các file sử dụng trong chương trình.
 
 # Các thư mục/file quan trọng
 ```
 ./
 |   .streamlit/
-|   |   secrets.toml
+|   |   secrets.toml (BẢO MẬT, KHÔNG UP TRỰC TIẾP LÊN GIT)
 |   |   config.toml
 |   data/
 |   |   form/
@@ -94,6 +65,8 @@ Nếu nội dung trong `value` không chứa dấu trùng thì không cần dùn
 |   |   queries.py
 |   models
 |   |   v1_rf.joblib
+|   |   v1_lr.joblib
+|   |   v1_olr.joblib
 |   pages/
 |   |   scene_1.py
 |   |   scene_2.py
@@ -102,8 +75,10 @@ Nếu nội dung trong `value` không chứa dấu trùng thì không cần dùn
 |   supabase/
 |   |   migrations/
 |   app.py
-|   main.py
 |   config.json
+|   main.py
+|   pyproject.toml
 |   README.md
+|   ui.py
 |   utils.py
 ```

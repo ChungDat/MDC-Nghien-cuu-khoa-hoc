@@ -1,5 +1,5 @@
 """
-ui.py — Streamlit UI utilities: CSS injection and chat bubble renderers.
+ui.py — Tiện ích giao diện Streamlit: chèn CSS và hiển thị bóng chat.
 """
 import streamlit as st
 
@@ -42,7 +42,7 @@ def inject_custom_css():
     color: white;
     align-self: flex-end;
 }
-/* Light mode support */
+/* Hỗ trợ chế độ sáng (light mode) */
 @media (prefers-color-scheme: light) {
     .chat-bubble {
         background-color: #f1f1f1;
@@ -59,13 +59,13 @@ def inject_custom_css():
 
 def _render_bubble(text: str, extra_class: str = "", delay: float = 0, key: str | None = None):
     """
-    Shared implementation for rendering an animated chat bubble.
+    Triển khai chia sẻ để hiển thị bóng chat có hiệu ứng hoạt ảnh.
 
-    Parameters:
-        text: HTML/markdown content to display inside the bubble.
-        extra_class: Additional CSS class(es) to append (e.g. 'chat-bubble-user').
-        delay: Animation delay in seconds; only applied the first time this key is seen.
-        key: Unique session-state key used to ensure the animation fires only once.
+    Tham số:
+        text: Nội dung HTML/markdown hiển thị trong bóng chat.
+        extra_class: Lớp CSS bổ sung (ví dụ: 'chat-bubble-user').
+        delay: Thời gian chờ hoạt ảnh tính bằng giây; chỉ áp dụng lần đầu tiên key xuất hiện.
+        key: Khóa session-state duy nhất đảm bảo hoạt ảnh chỉ chạy một lần.
     """
     anim_delay = 0.0
     if delay > 0 and key:
@@ -73,29 +73,29 @@ def _render_bubble(text: str, extra_class: str = "", delay: float = 0, key: str 
             st.session_state[key] = True
             anim_delay = delay
 
+    # Bubble có key (bot): chỉ thêm fade-in khi xuất hiện lần đầu (anim_delay > 0)
+    #   → tránh replay animation khi Streamlit rerun
+    # Bubble không có key (user): luôn thêm fade-in vì chúng chỉ xuất hiện sau hành động người dùng
+    if key is None:
+        should_animate = True
+        anim_delay = delay  # giữ nguyên delay được truyền vào (thường = 0)
+    else:
+        should_animate = anim_delay > 0
+
     style = f"animation-delay: {anim_delay}s;" if anim_delay > 0 else ""
-    classes = f"fade-in chat-bubble {extra_class}".strip()
+    fade_class = "fade-in " if should_animate else ""
+    classes = f"{fade_class}chat-bubble {extra_class}".strip()
     st.markdown(
         f'<div class="chat-container"><div class="{classes}" style="{style}">{text}</div></div>',
         unsafe_allow_html=True,
     )
 
-    if anim_delay > 0:
-        st.markdown(f"""
-        <style>
-        div.stButton {{
-            animation: floatUp 0.8s ease-out both !important;
-            animation-delay: {anim_delay}s !important;
-        }}
-        </style>
-        """, unsafe_allow_html=True)
-
 
 def render_text(text: str, delay: float = 0, key: str | None = None):
-    """Render a bot/narrator chat bubble."""
+    """Hiển thị bóng chat của bot/người dẫn truyện."""
     _render_bubble(text, extra_class="", delay=delay, key=key)
 
 
 def render_user_text(text: str, delay: float = 0, key: str | None = None):
-    """Render a user-side chat bubble (right-aligned, blue)."""
+    """Hiển thị bóng chat phía người dùng (căn phải, màu xanh)."""
     _render_bubble(text, extra_class="chat-bubble-user", delay=delay, key=key)
