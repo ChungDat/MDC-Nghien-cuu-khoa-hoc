@@ -1,6 +1,3 @@
-# TODO
-* Sửa lỗi bong bóng chat
-
 # Thiết lập môi trường
 
 ## Sử dụng Anaconda
